@@ -1,62 +1,92 @@
-console.log("¡Hola a todos! Observen este número: ", 5000 * 22);
-// estoy en carpeta script javascript
-//VARIABLESSSSSSS
-var iva = 21;
-iva = 10.5;
-console.log("valor actual de impuesto IVA =", iva);
-var resultado;
-resultado = (1 + 3) * 2;
-console.log("resultado es =", resultado);
-/* const iva = 21;
-// las constantes no se deben cambiar sino aparece error
-iva = 10.5; */
-nombre = "juan";
-console.log("tu nombre es: ", nombre);
-/* IDENTIFICAMOS TIPOS DE DATOS */
-var s = "Hola, me llamo Juan"; // s, de string
-var n = 28; // n, de número
-var b = true; // b, de booleano
-var u; // u, de undefined
-console.log("var s = Hola, me llamo Juan es variable de tipo :", typeof s);
-console.log("var n = 28 es variable de tipo : ", typeof n);
-console.log("var b= true es variable de tipo : ", typeof b);
-console.log("var u es variable de tipo : ", typeof u);
-/* DECLARACION DE VARIABLES Y CONSTANTES COMO OBJETOS con el CONSTRUCTOR NUMBER*/
-const pi = new Number(3.14);
-var n2 = new Number(44);
-console.log("const=", pi);
-console.log("var=", n2); // true
-/* Comprobaciones numéricas */
+function validarFormulario(event) {
+    event.preventDefault(); 
 
-// ¿Número seguro?
+ 
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const localidad = document.getElementById("localidad").value;
+    const email = document.getElementById("email").value;
+    const telefono = document.getElementById("telefono").value;
 
-// ¿No es un número?
-Number.isNaN(5);
-console.log(Number.isInteger(5)); // true
-console.log(Number.isInteger(9.7)); // false
-console.log(Number.isFinite(Infinity)); // false
-console.log(Number.isFinite(2324556)); // true
-console.log(Number.isSafeInteger(1e15)); // true
-console.log(Number.isSafeInteger(9007199254740992)); // false porque supera 9.007.199.254.740.991
-console.log(Number.isNaN(NaN)); // true
-console.log(Number.isNaN(235)); // false
+  
+    const soloTextoRegex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+    const numerosYTextoRegex = /^[0-9A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+    const emailRegex = /\S+@\S+\.\S+/;
+    const soloNumerosRegex = /^\d+$/;
 
-/* Conversión numérica - Veamos un ejemplo con parseInt(). */
+ 
+    if (
+        nombre === "" ||
+        apellido === "" ||
+        localidad === "" ||
+        email === "" ||
+        telefono === ""
+    ) {
+       /* alerta personalizada de la librería SweetAlert2 */
+       swal.fire({
+        title: 'Error!',
+        text: 'Por favor complete todos los campos obligatorios',
+        icon: "error",
+        width: '330px'
+    });
+    } else if (!soloTextoRegex.test(nombre)) {
+        /* alerta personalizada de la librería SweetAlert2 */
+        swal.fire({
+            title: 'Error!',
+            text: 'El campo nombre solo puede contener letras y espacios',
+            icon: "error",
+            width: '330px'
+        });
+    } else if (!soloTextoRegex.test(apellido)) {
+         /* alerta personalizada de la librería SweetAlert2 */
+         swal.fire({
+            title: 'Error!',
+            text: 'El campo apellido solo puede contener letras y espacios',
+            icon: "error",
+            width: '330px'
+        });
+    } else if (!numerosYTextoRegex.test(localidad)) {
+          /* alerta personalizada de la librería SweetAlert2 */
+          swal.fire({
+            title: 'Error!',
+            text: 'El campo localidad solo puede contener letras, números y espacios',
+            icon: "error",
+            width: '330px'
+        });
+    } else if (!emailRegex.test(email)) {
+          /* alerta personalizada de la librería SweetAlert2 */
+          swal.fire({
+            title: 'Error!',
+            text: 'Por favor ingrese una dirección de correo electrónico válida',
+            icon: "error",
+            width: '330px'
+        });
+    } else if (!soloNumerosRegex.test(telefono)) {
+         /* alerta personalizada de la librería SweetAlert2 */
+         swal.fire({
+            title: 'Error!',
+            text: 'El campo teléfono solo puede contener números',
+            icon: "error",
+            width: '330px'
+        });
+    } else {
 
-console.log(Number.parseInt("42")); // 42
-console.log(Number.parseInt("42€")); // 42
-console.log(Number.parseInt("Núm. 42")); // NaN
-console.log(Number.parseInt("A")); // NaN
-/*                */
-console.log(Number.parseInt("11101", 2)); // 29
-console.log(Number.parseInt("31", 8)); // 25
+         /* alerta personalizada de la librería SweetAlert2 */
+         swal.fire({
+            title: '',
+            text: 'Formulario enviado correctamente',
+            icon: "success",
+            width: '330px'
+        });
+    }
+}
 
-/*  CONCATENACION   */
-var txt1 = "Juan";
-var txt2 = "Pablo";
-var txt3 = txt1 + " " + txt2;
-console.log(txt3);
-var txt4 = "Bienvenidos ";
-txt4 += "a Javascript";
-console.log(txt4);
+function borrarFormulario() {
+    document.getElementById("contactoForm").reset();
+}
 
+
+document.querySelector("button[type='button'][onclick='validarFormulario()']").addEventListener("click", validarFormulario);
+
+
+document.querySelector("button[type='button'][onclick='borrarFormulario()']").addEventListener("click", borrarFormulario);
